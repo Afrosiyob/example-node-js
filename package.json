@@ -1,0 +1,38 @@
+{
+    "name": "example-node",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server/app.js",
+        "server": "nodemon server/app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Afrosiyob/example-node-js.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Afrosiyob/example-node-js/issues"
+    },
+    "homepage": "https://github.com/Afrosiyob/example-node-js#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "config": "^3.3.6",
+        "express": "^4.17.1",
+        "express-async-errors": "^3.1.1",
+        "express-validator": "^6.12.0",
+        "jsonwebtoken": "^8.5.1",
+        "lodash": "^4.17.21",
+        "mongodb": "^3.6.10",
+        "mongoose": "^5.13.2",
+        "morgan": "^1.10.0",
+        "serve-index": "^1.9.1"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.12"
+    }
+}
