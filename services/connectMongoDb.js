@@ -1,7 +1,6 @@
 const mongoose = require( "mongoose" )
 const config = require( "config" )
 
-// Simple connection
 const connectMongoDB = async () =>
     await mongoose
         .connect( config.get( "mongoUrl" ), {
@@ -16,19 +15,6 @@ const connectMongoDB = async () =>
             process.exit( 1 )
         } )
 
-// Connection for file
-const connectMongoDBFile = mongoose
-    .createConnection( config.get( "mongoFileUrl" ), {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-
-        useCreateIndex: true,
-        useFindAndModify: false,
-    } )
-
-
-
 module.exports = {
-    connectMongoDB,
-    connectMongoDBFile
+    connectMongoDB
 }

@@ -31,6 +31,7 @@ app.use(
 app.use( "/api/user", userRouter );
 app.use( "/api/auth", authRouter );
 app.use( "/api/book", bookRouter );
+app.use( "/api/file", fileRouter );
 
 
 // Create PORT

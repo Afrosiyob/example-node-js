@@ -1,7 +1,9 @@
 const { validationResult } = require( "express-validator" );
 const { UserModel } = require( "../models/user.model" );
 const config = require( "config" )
-const jwt = require( "jsonwebtoken" )
+const jwt = require( "jsonwebtoken" );
+const multer = require( "multer" );
+
 
 // Get and send errors
 const validationError = async ( req, res, next ) => {
@@ -57,8 +59,29 @@ const checkAuth = async ( req, res, next ) => {
     }
 };
 
+
+// Set
+const storage = multer.diskStorage( {
+    destination: ( req, file, cb ) => {
+        cb( null, `./public/images` );
+    },
+    filename: ( req, file, cb ) => {
+        cb(
+            null,
+            file.fieldname + "-" + Date.now() + path.extname( file.originalname )
+        );
+    },
+} );
+
+//Init Upload
+const upload = multer( {
+    storage: storage,
+} ).single( "image" );
+
+
 module.exports = {
     validationError,
     setPermissions,
-    checkAuth
+    checkAuth,
+    upload
 }
