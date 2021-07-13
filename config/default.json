@@ -1,5 +1,6 @@
 {
-    "mongoUrl": "mongodb://localhost:27017/example",
-    "PORT": 5000,
-    "jwtSecret": "afrosiyob leo"
+  "mongoUrl": "mongodb://localhost:27017/example",
+  "mongoFileUrl": "mongodb://localhost:27017/file",
+  "PORT": 5000,
+  "jwtSecret": "afrosiyob leo"
 }
