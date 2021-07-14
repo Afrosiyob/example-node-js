@@ -11,6 +11,7 @@ const { authRouter } = require("../src/routes/auth.routes");
 const { bookRouter } = require("../src/routes/book.routes");
 const { fileRouter } = require("../src/routes/file.routes");
 
+require("express-async-errors");
 // Create App server
 const app = express();
 

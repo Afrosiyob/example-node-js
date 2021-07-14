@@ -3,8 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const _ = require("lodash");
 const config = require("config");
-const { statusOk } = require("../res/res.success");
-require("express-async-errors");
+const { statusOk } = require("../res/res");
 
 const authLogin = async(req, res) => {
     const { username, password } = req.body;

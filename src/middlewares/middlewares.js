@@ -3,14 +3,15 @@ const { validationResult } = require("express-validator");
 const config = require("config");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
+const { statusError } = require("../res/res");
 
 // Get and send errors
 const validationError = async(req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        res.status(400).json({
-            errors: errors.array(),
-            message: "please check failds",
+        statusError(res, 400, {
+            error: errors.array(),
+            message: "please check inputs",
         });
     } else {
         await next();
@@ -22,13 +23,13 @@ const setPermissions = (permissions) => async(req, res, next) => {
     const { userId } = req.user;
     const user = await UserModel.findById(userId);
     if (!user) {
-        throw Error("no role");
+        throw Error("NO_ROLE");
     } else {
         const { role } = user;
         if (permissions.includes(role)) {
             await next();
         } else {
-            throw Error("no permession");
+            throw Error("NO_PERMESSION");
         }
     }
 };

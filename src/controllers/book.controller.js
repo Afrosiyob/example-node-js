@@ -1,6 +1,7 @@
 const { BookModel } = require("../models/book.model");
 const { UserModel } = require("../models/user.model");
-
+const { statusOk } = require("../res/res");
+const _ = require("lodash");
 const createBook = async(req, res) => {
     const { name } = req.body;
     const checkBook = await BookModel.findOne({ name });
@@ -12,25 +13,26 @@ const createBook = async(req, res) => {
             owner: req.user.userId,
         });
         await newBook.save();
-        res.status(200).json({ message: "new book created" });
+        statusOk(res, {
+            data: _.pick(newBook, ["name", "owner"]),
+            message: "new book created",
+        });
     }
 };
 
 const getBooks = async(req, res) => {
-    try {
-        let books;
-        const { userId } = req.user;
-        const { role } = await UserModel.findById(userId);
-        if (role === "admin") {
-            books = await BookModel.find();
-        } else {
-            books = await BookModel.find({ owner: userId });
-        }
-        res.status(200).json({ data: books, message: "all books" });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "server error" });
+    let books;
+    const { userId } = req.user;
+    const { role } = await UserModel.findById(userId);
+    if (role === "admin") {
+        books = await BookModel.find();
+    } else {
+        books = await BookModel.find({ owner: userId });
     }
+    statusOk(res, {
+        data: books,
+        message: "all books",
+    });
 };
 
 const getBook = async(req, res) => {
