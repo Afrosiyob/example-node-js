@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const serveIndex = require("serve-index");
 const { handleErrors } = require("../src/errors/errors");
 const { connectMongoDB } = require("../services/connectMongoDb");
+require("express-async-errors");
 
 // Import Routes
 const { userRouter } = require("../src/routes/user.routes");
@@ -11,7 +12,6 @@ const { authRouter } = require("../src/routes/auth.routes");
 const { bookRouter } = require("../src/routes/book.routes");
 const { fileRouter } = require("../src/routes/file.routes");
 
-require("express-async-errors");
 // Create App server
 const app = express();
 
