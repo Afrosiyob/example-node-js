@@ -7,6 +7,7 @@ const createUser = async(req, res) => {
     const checkUsername = await UserModel.findOne({ username });
     if (checkUsername) {
         throw Error("SAME_USERNAME");
+        // res.status(400).json({ message: "enter other username" });
     } else {
         const hashedPassword = await bcrypt.hash(password, 12);
         const newUser = new UserModel({

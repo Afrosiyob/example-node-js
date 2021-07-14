@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const serveIndex = require("serve-index");
 const { handleErrors } = require("../src/errors/errors");
 const { connectMongoDB } = require("../services/connectMongoDb");
+const winston = require("winston");
+const { logger } = require("../src/logs/logs");
 require("express-async-errors");
 
 // Import Routes
@@ -39,6 +41,15 @@ app.use("/api/file", fileRouter);
 
 // Handle promise and server error (please put this code after last middleware)
 app.use(handleErrors);
+
+// Write logs
+if (app.get("env") !== "production") {
+    logger.add(
+        new winston.transports.Console({
+            format: winston.format.simple(),
+        })
+    );
+}
 
 // Create PORT
 const PORT = config.get("PORT") || process.env.PORT || 5000;
