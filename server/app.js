@@ -6,6 +6,7 @@ const { userRouter } = require("../src/routes/user.routes");
 const { authRouter } = require("../src/routes/auth.routes");
 const serveIndex = require("serve-index");
 const { bookRouter } = require("../src/routes/book.routes");
+const { handleErrors } = require("../src/errors/errors");
 
 // Create App server
 const app = express();
@@ -30,6 +31,9 @@ app.use(
 app.use("/api/user", userRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/book", bookRouter);
+
+// Handle promise and server error (please put this code after last middleware)
+app.use(handleErrors);
 
 // Create PORT
 const PORT = config.get("PORT") || process.env.PORT || 5000;

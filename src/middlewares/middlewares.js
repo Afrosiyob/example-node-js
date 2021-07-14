@@ -1,7 +1,7 @@
 const { validationResult } = require("express-validator");
 const { UserModel } = require("../models/user.model");
-const config = require("config")
-const jwt = require("jsonwebtoken")
+const config = require("config");
+const jwt = require("jsonwebtoken");
 
 // Get and send errors
 const validationError = async(req, res, next) => {
@@ -9,25 +9,28 @@ const validationError = async(req, res, next) => {
     if (!errors.isEmpty()) {
         res.status(400).json({
             errors: errors.array(),
-            message: "please check failds"
-        })
+            message: "please check failds",
+        });
     } else {
-        await next()
+        await next();
     }
-}
+};
 
 // Check permissions
 const setPermissions = (permissions) => async(req, res, next) => {
-    const { userId } = req.user
-    const { role } = await UserModel.findById(userId)
-    if (permissions.includes(role)) {
-        await next()
+    const { userId } = req.user;
+    const user = await UserModel.findById(userId);
+    if (!user) {
+        throw Error("no role");
     } else {
-        return res
-            .status(401)
-            .json({ message: " u dont have a permission this route " })
+        const { role } = user;
+        if (permissions.includes(role)) {
+            await next();
+        } else {
+            throw Error("no permession");
+        }
     }
-}
+};
 
 // Check auth and token
 const checkAuth = async(req, res, next) => {
@@ -52,7 +55,9 @@ const checkAuth = async(req, res, next) => {
             }
         } catch (error) {
             console.log(error);
-            return await res.status(401).json({ message: "auth error catch middleware", error });
+            return await res
+                .status(401)
+                .json({ message: "auth error catch middleware", error });
         }
     }
 };
@@ -60,5 +65,5 @@ const checkAuth = async(req, res, next) => {
 module.exports = {
     validationError,
     setPermissions,
-    checkAuth
-}
+    checkAuth,
+};
