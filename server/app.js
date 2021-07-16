@@ -5,7 +5,7 @@ const serveIndex = require( "serve-index" );
 const { handleErrors } = require( "../src/errors/errors" );
 const { connectMongoDB } = require( "../services/connectMongoDb" );
 const winston = require( "winston" );
-const { logger } = require( "../src/logs/logs" );
+const { logger } = require( "../src/logger/logger" );
 require( "express-async-errors" );
 
 // Import Routes

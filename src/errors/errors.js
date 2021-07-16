@@ -1,9 +1,10 @@
-const { logger } = require( "../logs/logs" );
+const { logger } = require( "../logger/logger" );
 
 const handleErrors = async ( err, req, res, next ) => {
     const { message } = err;
     switch ( message ) {
         case "NO_ROLE":
+            logger.error( "same username" );
             return await res.status( 403 ).json( { error: message } );
         case "NO_PERMESSION":
             return await res.status( 403 ).json( { error: message } );
@@ -12,6 +13,7 @@ const handleErrors = async ( err, req, res, next ) => {
                 .status( 400 )
                 .json( { error: message, message: "password incorrect" } );
         case "NO_USER":
+            logger.error( "same username" );
             res.status( 400 ).json( { error: message, message: "no user" } );
         case "SAME_NAME":
             return await res
@@ -28,7 +30,7 @@ const handleErrors = async ( err, req, res, next ) => {
                 .status( 400 )
                 .json( { error: message, message: "enter other username" } );
         default:
-            console.log( err );
+
             return await res.status( 500 ).json( { message: "server error new" } );
     }
 };
